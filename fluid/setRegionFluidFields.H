@@ -70,27 +70,30 @@
 
     const dimensionedScalar& a1 = a1Reactor[i];
     const dimensionedScalar& a2 = a2Reactor[i];
-    const dimensionedScalar& a3 = a3Reactor[i];
-
-    word cellSetName = "catalyst";
-
-    label zoneID = mesh.cellZones().findZoneID(cellSetName);
-
-    if (zoneID == -1)
-    {
-	FatalErrorIn("yourFunctionName")
-		<< "Cannot find cellZone " << cellSetName << endl
-		<< "Valid cellZones are " << mesh.cellZones().names()
-		<< exit(FatalError);
-    }
-
-    const labelList& cells = mesh.cellZones()[zoneID];
-
-    Info << "Cells in cellzone " << cellSetName << ":" << endl;
-    forAll(cells, i)
-    {
-    const label cell = cells[i];
-	zF[cell]=1;
-    }
+    const dimensionedScalar& a3 = a3Reactor[i]; 
+    
     const bool active = activeFluid[i];
     const bool activeCat = activeCatFluid[i];
+    if (activeCat)
+    {
+        word cellSetName = "catalyst";
+
+        label zoneID = mesh.cellZones().findZoneID(cellSetName);
+
+        if (zoneID == -1)
+        {
+        FatalErrorIn("yourFunctionName")
+            << "Cannot find cellZone " << cellSetName << endl
+            << "Valid cellZones are " << mesh.cellZones().names()
+            << exit(FatalError);
+        }
+
+        const labelList& cells = mesh.cellZones()[zoneID];
+
+        Info << "Cells in cellzone " << cellSetName << ":" << endl;
+        forAll(cells, i)
+        {
+        const label cell = cells[i];
+        zF[cell]=1;
+        }
+    }
