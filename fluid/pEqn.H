@@ -146,6 +146,9 @@ if (adjustMass && !thermo.incompressible())
 if (mesh.steady() || pimple.simpleRho() || adjustMass)
 {
     rho = thermo.rho();
+    rho = max(rho, rhoMin[i]);
+    rho = min(rho, rhoMax[i]);
+
 }
 
 if ((mesh.steady() || pimple.simpleRho()) && !pimple.transonic())
